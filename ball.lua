@@ -8,6 +8,8 @@ function Ball:load()
     self.speed = 200
     self.xVel = -self.speed
     self.yVel = 0
+    self.PP = 0
+    self.PC = 0
 end
 
 function Ball:update(dt)
@@ -30,11 +32,11 @@ function Ball:collide()
         local middleAI = AI.y + AI.height / 2
         local collisionPosition = middleBall - middleAI
         self.yVel = collisionPosition * 5
-    end 
+    end
 
     if self.y < 0 then
         self.y = 0
-        self.y = -self.yVel 
+        self.yVel = -self.yVel 
     elseif self.y + self.height > love.graphics.getHeight() then
         self.y = love.graphics.getHeight() - self.height
         self.yVel = -self.yVel
@@ -45,6 +47,7 @@ function Ball:collide()
         self.y = love.graphics.getHeight() / 2 - self.height / 2
         self.yVel = 0
         self.yVel = self. speed
+        self.PC = self.PC + 1
     end
 
     if self.x + self.width > love.graphics.getWidth() then
@@ -52,6 +55,7 @@ function Ball:collide()
         self.y = love.graphics.getHeight() / 2 - self.height / 2
         self.yVel = 0
         self.yVel = -self. speed
+        self.PP = self.PP + 1
     end
 end
 
@@ -62,4 +66,7 @@ end
 
 function Ball:draw()
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+
+    love.graphics.print("Jogador: ".. self.PP, 50, 50)
+    love.graphics.print("IA: ".. self.PC, love.graphics.getWidth() - 70, 50)
 end
